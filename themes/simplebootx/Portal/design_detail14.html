@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$post_title} {$site_name}</title>
+<tc_include file="Public:head" />
+</head>
+<php>
+$photo = $smeta['photo'];
+</php>
+<body>
+<tc_include file="Public:nav" />
+<div class="showcontent">
+  <div class="wtitle">
+    <h1>{$post_title}</h1>
+    <div class="oinfo">
+      <span>时间：{$post_date}</span><span class="ml10">浏览：{$post_hits} 次</span>
+    </div>
+  </div>
+  <div class="incontent">
+    <div class="imgcenter">
+      <empty name="photo">
+      <p><img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="" /></p>
+      <else />
+      <p></p>
+                详细展示
+            <!-- 轮播图开始  -->   
+<link href="__TMPL__Public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="__TMPL__Public/bootstrap/js/jquery-2.1.4.min.js"></script>
+<script src="__TMPL__Public/bootstrap/js/bootstrap.min.js"></script>
+<div id="myCarousel" class="carousel slide" style="margin:0 auto;width:900px;">
+   <!-- 轮播（Carousel）指标 -->
+   <ol class="carousel-indicators">
+   <foreach name="photo" item="vo">
+      <li data-target="#myCarousel" data-slide-to="{$key}" <if condition="$key eq 0">class="active"</if> ></li>
+   </foreach>
+   </ol>
+   <!-- 轮播（Carousel）项目 -->
+   <div class="carousel-inner">
+      <foreach name="photo" item="vo">
+      <div class="item <if condition="$key eq 0">active</if>">
+         <img src="{:sp_get_asset_upload_path($vo['url'])}" style="margin:0 auto;" alt="{$vo.alt}">
+      </div>
+      </foreach>
+   </div>
+   <!-- 轮播（Carousel）导航 -->
+   <a class="carousel-control left" href="#myCarousel" 
+      data-slide="prev">&lsaquo;</a>
+   <a class="carousel-control right" href="#myCarousel" 
+      data-slide="next">&rsaquo;</a>
+   <!-- 控制按钮 -->
+   <div style="text-align:center;">
+      <!-- <input type="button" class="btn start-slide" value="开始"> -->
+      <input type="button" class="btn pause-slide" value="停止轮播">
+      <!-- <input type="button" class="btn prev-slide" value="上一张">
+      <input type="button" class="btn next-slide" value="下一张"> -->
+      <foreach name="photo" item="vo">
+      <input type="button" class="btn slide-{$key}" value="{$vo.alt}">&nbsp;&nbsp;
+      </foreach>    
+   </div>
+   <!--高速版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: 'cyskK8R8y',
+        conf: 'prod_5b4155fe1c0d905b94054ad181fa842a'
+    });
+</script>        
+
+</div> 
+<script>
+   $(function(){
+      // 初始化轮播
+      $(".start-slide").click(function(){
+         $("#myCarousel").carousel('cycle');
+      });
+      // 停止轮播
+      $(".pause-slide").click(function(){
+         $("#myCarousel").carousel('pause');
+      });
+      // 循环轮播到上一个项目
+      $(".prev-slide").click(function(){
+         $("#myCarousel").carousel('prev');
+      });
+      // 循环轮播到下一个项目
+      $(".next-slide").click(function(){
+         $("#myCarousel").carousel('next');
+      });
+   	  // 循环轮播到某个特定的帧 
+   	  <foreach name="photo" item="vo">
+      $(".slide-{$key}").click(function(){
+         $("#myCarousel").carousel({$key});
+      });
+      </foreach>
+   });
+</script>
+                <!-- 轮播图结束  -->
+                </empty>
+                </div>
+  </div>
+  <div class="btbox fn-clear">
+    <div class="wface fn-left">
+      <if condition="!empty($prev)">
+      <p>上一篇：<a href="{:U('article/index',array('id'=>$prev['tid']))}">{$prev.post_title}</a></p>
+      </if>
+      
+      <if condition="!empty($next)">
+	  <p>下一篇：<a href="{:U('article/index',array('id'=>$next['tid']))}">{$next.post_title}</a></p>
+	  </if>
+    </div>
+  </div>
+</div>
+<tc_include file="Public:footer"/>
+</body>
+</html>

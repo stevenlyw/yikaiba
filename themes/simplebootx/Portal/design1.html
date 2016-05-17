@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$name} {$seo_title} {$site_name}</title>
+<tc_include file="Public:head" />
+</head>
+
+<body>
+<tc_include file="Public:nav" />
+<div class="uicontent">
+<php>
+             		$lists = sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;",20);
+             	</php>
+  <h2 class="fn-clear">
+    <span>共<font class="f30">{$lists['count']}</font>个作品</span>
+    <ul class="fn-clear fn-left">
+      	  <li class="selected"><a href="index.php?g=portal&m=list&a=index&id=8">所有作品</a></li>
+      <?php
+		 $term_id=8;
+ 		 $terms=sp_get_child_terms($term_id ); //获取子分类信息
+	  ?>
+<foreach name="terms" item="vo">
+ 	      <li ><a href="index.php?g=portal&m=list&a=index&id={$vo['term_id']}">{$vo.name}</a></li>
+</foreach>
+      </ul>
+  </h2>
+  <ul class="uibox fn-clear">
+   				
+             	<volist name="lists['posts']" id="vo">
+             	<php>
+             		$smeta=json_decode($vo['smeta'], true);
+             	</php>
+    <li>
+      <a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >
+        <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" width="275" height="190" alt="google+ GUI" />
+      </a>
+      <div class="lion">
+        <div class="lititle"><a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >{$vo.post_title}</a></div>
+        <div class="lides">
+          <p>
+                        <br/>
+            3天前 发布
+            <br/>
+            <span class="cf30">{$vo.post_hits}</span> 点击 
+          </p>
+        </div>
+      </div>
+    </li>
+    
+    </volist>
+    
+    </ul>
+  <div class="wpages fn-clear">
+    <script id="cy_cmt_num" src="assets/js/plugins.list.count.js"></script>
+    <div class="yk_page"> <ul>  {$lists['page']}</ul></div>  </div>
+</div>
+<tc_include file="Public:footer" />
+</body>
+</html>

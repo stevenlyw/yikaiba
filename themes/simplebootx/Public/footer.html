@@ -1,0 +1,31 @@
+<div class="wfooter">
+  <div class="links">
+    <h2>友情链接</h2>
+    <php>$links=sp_getlinks();</php>
+<foreach name="links" item="vo">
+    <a href="{$vo.link_url}" target="{$vo.link_target}">{$vo.link_name}</a>
+  </foreach>
+  </div>
+  <div class="aboutweb">
+      站长统计：<span style="margin-bottom:5px;"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1257155230'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1257155230%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script></span>
+  <span style="color:#B4A0AA">声明：本站部分截图版权归原作者所有，在此加以分享。如有冒犯，请来信说明。529988248@qq.com</span>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(e) {
+	$(".category").hover(
+	    function(){
+		    $('.typebox').slideDown("fast");
+		},
+		function(){
+		    $('.typebox').stop(true).slideUp("fast");
+		}
+	);
+	$(".typebox").find('li').click(function(){
+	    $(".catetext").text($(this).text());
+		$("#catid").val($(this).attr("data-id"));
+		$('.typebox').stop(true).slideUp("fast");
+	});
+	$('.ck-slide').ckSlide();
+});
+</script>

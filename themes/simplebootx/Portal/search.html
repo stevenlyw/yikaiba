@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>搜索 {$site_name}</title>
+<tc_include file="Public:head" />
+</head>
+<body>
+<tc_include file="Public:nav" />
+<div class="uicontent">
+						<php>
+							$result=sp_sql_posts_paged_bykeyword($keyword,"",20);
+						</php>
+  <h2 class="fn-clear">
+    <span>搜索共<font class="f30">{$result['count']}</font>篇文章</span>
+    <ul class="fn-clear fn-left">
+      <li class="selected"><a href="index.htmlarticle/">搜索文章</a></li>
+    </ul>
+  </h2>
+  <h3 class="sm">'{$keyword}' 搜索结果</h3>
+  <div class="listbox fn-clear">
+    <div class="arclist">
+      <ul>
+     		 	
+			<volist name="result['posts']" id="vo">
+					<php>
+						$smeta=json_decode($vo['smeta'], true);
+					</php>
+        <li class="fn-clear">
+          <a href="{:leuu('article/index',array('id'=>$vo['tid']))}"   class="imga">
+            <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" height="190" alt="{$vo.post_title}">
+          </a>
+          <div class="upYqBoxCon">
+            <div class="arcTitle">
+              <b><a href="article_detail.html"  >{$vo.post_title}</a></b>
+            </div>
+            <div class="blackLink">
+              <p>
+                {:date('Y年m月d日  H:i',strtotime($vo['post_modified']))}上传  
+              </p>
+              <p class="mt10">{$vo.post_excerpt}</p>
+            </div>
+          </div>
+        </li>
+        </volist>
+            </ul>
+      <div class="wpages fn-clear">
+        <script id="cy_cmt_num" src="assets/js/plugins.list.count.js"></script>
+        <div> {$result['page']}</div>      </div>
+    </div>
+  </div>
+</div>
+<tc_include file="Public:footer"/>
+</body>
+</html>

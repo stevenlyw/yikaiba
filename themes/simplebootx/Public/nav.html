@@ -1,0 +1,24 @@
+<div class="header">
+  <div class="w1200 fn-clear">
+    <div class="logo"><a href="__ROOT__/"><img src="__TMPL__Public/assets/img/logo.fw.png" width="300" height="80"  alt=""/></a></div>
+    <div class="nav">
+      <a href="index.php">首页</a>
+      <a href="index.php?g=portal&m=list&a=index&id=3">文章</a>
+      <a href="index.php?g=portal&m=list&a=index&id=4">企业官网</a>
+      <a href="index.php?g=portal&m=list&a=index&id=8">商城系统</a>
+      <a href="index.php?g=portal&m=list&a=index&id=13">APP</a>
+      <a href="index.php?g=portal&m=list&a=index&id=14">微信</a>
+    </div>
+    <div class="formbox">
+      <form action="{:U('portal/search/index')}" method="post" class="fn-clear">
+        <input type="text" name="keyword" value="{:I('get.keyword')}" class="stext fn-left" placeholder="请输入关键词" value="" />
+        <button type="submit" name="sbut" class="sbut fn-left"></button>
+      </form>
+    </div>
+    <!--
+    <div class="uinfo">
+      <a href="index.html#" class="login">登录</a><a href="index.html#" class="reg">注册</a>
+    </div>
+    -->
+  </div>
+</div>

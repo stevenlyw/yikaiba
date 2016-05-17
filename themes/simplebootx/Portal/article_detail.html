@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$post_title} {$site_name} </title>
+<tc_include file="Public:head" />
+</head>
+
+<body>
+<tc_include file="Public:nav" />
+<div class="showcontent">
+  <div class="wtitle">
+    <h1>{$post_title}</h1>
+    <div class="oinfo">
+            <span class="ml10">时间：{$post_date}</span>
+    </div>
+  </div>
+  <div class="incontent">
+  {$post_content}
+  </div>
+  <!--高速版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: 'cyskK8R8y',
+        conf: 'prod_5b4155fe1c0d905b94054ad181fa842a'
+    });
+</script>        
+
+  <div class="btbox fn-clear">
+    <div class="wface fn-left">
+    <if condition="!empty($prev)">
+      <p>上一篇：<a href="{:U('article/index',array('id'=>$prev['tid']))}">{$prev.post_title}</a></p>
+      </if>
+      
+      <if condition="!empty($next)">
+	  <p>下一篇：<a href="{:U('article/index',array('id'=>$next['tid']))}">{$next.post_title}</a></p>
+	  </if>
+    </div>
+    
+  </div>
+  <div class="uyan">
+    <div id="SOHUCS" sid="a16"></div>
+    <script charset="utf-8" type="text/javascript" src="assets/js/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: 'cyrVIQX8H',
+        conf: 'prod_5c1357557972b98c17b2c748d528888b'
+    });
+</script>   </div>
+</div>
+<tc_include file="Public:footer"/>
+</body>
+</html>

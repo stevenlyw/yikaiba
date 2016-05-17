@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>壹凯巴欢迎您光临</title>
+<tc_include file="Public:head" />
+</head>
+<body>
+<tc_include file="Public:nav" />
+<div class="box_one fn-clear">
+  <div class="fcous">
+    <div class="ck-slide">
+    <php>
+	$home_slides=sp_getslide("portal_index");
+	$home_slides=empty($home_slides)?$default_home_slides:$home_slides;
+	</php>
+      <ul class="ck-slide-wrapper">
+      
+        <foreach name="home_slides" item="vo">
+        <li>
+          <a href="{$vo.slide_url}"><img src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt="{$vo.slide_name}"></a>
+        </li>
+         </foreach>
+      </ul>
+      <a href="javascript:" class="ctrl-slide ck-prev">上一张</a> <a href="javascript:" class="ctrl-slide ck-next">下一张</a>
+      <div class="ck-slidebox">
+        <div class="slideWrap">
+          <ul class="dot-wrap">
+          <foreach name="home_slides" item="vo">
+            <li <if condition="$key eq 0">class="current"</if>><em>1</em></li>
+          </foreach>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hot_arc">
+    <h2><a href="index.php?g=portal&m=list&a=index&id=3" class="more">更多&raquo;</a><span>最新文章</span></h2>
+    <div class="inhot">
+      <ul>
+      <php>
+		$lastnews=sp_sql_posts("cid:3;field:post_title,post_excerpt,tid,smeta;order:listorder asc;limit:4;"); 
+	</php>
+	<foreach name="lastnews" item="vo">
+		<php>$smeta=json_decode($vo['smeta'],true);</php>
+        <li><a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >{$vo.post_title}</a></li>
+    </foreach>
+     </ul>
+    </div>
+  </div>
+</div>
+<div class="uicontent">
+  <h2 class="fn-clear">
+    <span><a href="index.php?g=portal&m=list&a=index&id=4">更多作品</a></span>
+    <em>最新企业推荐</em>
+    <php>
+    	$where  =  array("recommended"=>"1");
+		$lastnews_qy=sp_sql_posts("cid:4;field:post_hits,post_title,post_excerpt,tid,smeta;order:listorder asc;limit:4;",$where); 
+	</php>
+  </h2>
+  <ul class="uibox fn-clear">
+  <foreach name="lastnews_qy" item="vo">
+		<php>$smeta_qy=json_decode($vo['smeta'],true);</php>
+    <li>
+      <a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >
+        <img src="{:sp_get_asset_upload_path($smeta_qy['thumb'])}" width="275" height="190" alt="{$vo.post_title}" />
+      </a>
+      <div class="lion">
+        <div class="lititle"><a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >{$vo.post_title}</a></div>
+        <div class="lides">
+          <p>
+           {$vo.post_excerpt}          <br/>
+           {:date('Y年m月d日  H:i',strtotime($vo['post_modified']))} 发布
+            <br/>
+            <span class="cf30">{$vo.post_hits}</span> 点击
+          </p>
+        </div>
+      </div>
+    </li>
+    </foreach>
+      </ul>
+</div>
+<div class="uicontent">
+  <h2 class="fn-clear">
+    <span><a href="index.php?g=portal&m=list&a=index&id=8">更多作品</a></span>
+    <em>最新商城推荐</em>
+    <php>
+		$lastnews_sc=sp_sql_posts("cid:8;field:post_hits,post_title,post_excerpt,tid,smeta;order:listorder asc;limit:4;"); 
+	</php>
+  </h2>
+  <ul class="uibox fn-clear">
+  <foreach name="lastnews_sc" item="vo">
+		<php>$smeta_sc=json_decode($vo['smeta'],true);
+		</php>
+    <li>
+      <a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >
+        <img src="{:sp_get_asset_upload_path($smeta_sc['thumb'])}" width="275" height="190" alt="{$vo.post_title}" />
+      </a>
+      <div class="lion">
+        <div class="lititle"><a href="{:leuu('article/index',array('id'=>$vo['tid']))}"  >{$vo.post_title}</a></div>
+        <div class="lides">
+          <p>
+            {$vo.post_excerpt}<br/>
+           {:date('Y年m月d日  H:i',strtotime($vo['post_modified']))} 发布
+            <br/>
+            <span class="cf30">{$vo.post_hits}</span> 点击
+          </p>
+        </div>
+      </div>
+    </li>
+    </foreach>
+      </ul>
+</div>
+<tc_include file="Public:footer"/>
+</body>
+</html>
