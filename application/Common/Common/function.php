@@ -684,7 +684,7 @@ function sp_get_asset_upload_path($file,$withhost=false){
 	if(strpos($file,"http")===0){
 		return $file;
 	}else if(strpos($file,"/")===0){
-		return $file;
+		return __ROOT__.$file;
 	}else{
 		$filepath=C("TMPL_PARSE_STRING.__UPLOAD__").$file;
 		if($withhost){
@@ -694,7 +694,7 @@ function sp_get_asset_upload_path($file,$withhost=false){
 				$filepath = $http.$_SERVER['HTTP_HOST'].$filepath;
 			}
 		}
-		return $filepath;
+		return __ROOT__.$filepath;
 		
 	}                    			
                         		
