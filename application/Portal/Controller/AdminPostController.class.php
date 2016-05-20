@@ -70,12 +70,20 @@ class AdminPostController extends AdminbaseController {
 			$article['smeta']=json_encode($_POST['smeta']);
 			$article['post_content']=htmlspecialchars_decode($article['post_content']);
 			$result=$this->posts_model->add($article);
+    
 			if ($result) {
-				//
-				foreach ($_POST['term'] as $mterm_id){
+				foreach ($_POST['term'] as $mterm_id){                                        
 					$this->term_relationships_model->add(array("term_id"=>intval($mterm_id),"object_id"=>$result));
-				}
-				
+                                //以term_id查询terms表的parent值是否为0,如果为零,只在terms_relasionship表中添加一条数据,如果有多层,就要添加多层关系数据                                        
+                                        $parentvalue = intval($mterm_id);
+                                        for($parentvalue;$parentvalue > 0;$parentvalue){
+                                        $parentvalue = intval($this->terms_model->where(array("term_id"=>intval($parentvalue)))->getField(parent));
+                                        if($parentvalue === 0){
+                                            break;
+                                        }
+                                        $this->term_relationships_model->add(array("term_id"=>intval($parentvalue),"object_id"=>$result));
+                                        }
+				}				
 				$this->success("添加成功！");
 			} else {
 				$this->error("添加失败！");
@@ -99,6 +107,8 @@ class AdminPostController extends AdminbaseController {
 	}
 	
 	public function edit_post(){
+            var_dump($_POST);
+            exit();
 		if (IS_POST) {
 			if(empty($_POST['term'])){
 				$this->error("请至少选择一个分类栏目！");
