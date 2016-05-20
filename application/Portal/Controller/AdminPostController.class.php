@@ -107,8 +107,6 @@ class AdminPostController extends AdminbaseController {
 	}
 	
 	public function edit_post(){
-            var_dump($_POST);
-            exit();
 		if (IS_POST) {
 			if(empty($_POST['term'])){
 				$this->error("请至少选择一个分类栏目！");
